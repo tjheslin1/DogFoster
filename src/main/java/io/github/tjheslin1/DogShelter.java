@@ -60,13 +60,14 @@ public class DogShelter {
         System.out.println(format("Congratulations! '%s' has been fostered.", dogFosterSuccess.dog));
     }
 
-    private void reportUnsuccessfulFosterAttempt(DogFosterRejection dogFosterRejection) {
+    private void reportUnsuccessfulFosterAttempt(AppealFailed appealFailed) {
+        DogFosterRejection dogFosterRejection = appealFailed.fosterRejection;
         System.out.println(format("Sorry! '%s' has not been fostered due to '%s'", dogFosterRejection.dog, dogFosterRejection.reason));
     }
 
-    private HappyPath<DogFosterSuccess, DogFosterRejection> appealFailedRequest(DogFosterRejection dogFosterRejection) {
+    private HappyPath<DogFosterSuccess, AppealFailed> appealFailedRequest(DogFosterRejection dogFosterRejection) {
         if (dogFosterRejection.reason.contains("too young")) {
-            return sadPath(dogFosterRejection);
+            return sadPath(new AppealFailed("blah", dogFosterRejection));
         }
 
         return happyPath(new DogFosterSuccess(dogFosterRejection.dog));
