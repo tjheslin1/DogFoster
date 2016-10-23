@@ -13,14 +13,16 @@ public class DogShelter {
     public static final int MINIMUM_DONATION = 75;
 
     public static void main(String[] args) {
-        Dog woody = new Patterdale("Woody", 5, true, 2, 80);
+        Dog woody = new Patterdale("Woody", 5, false, 2, 80);
         Dog buzz = new Patterdale("Buzz", 8, false, 3, 90);
+        Dog buster = new Patterdale("Buster", 8, true, 3, 110);
 
         Dog joey = new Westie("Joey", 2, false, true, 75);
         Dog archie = new Westie("Archie", 4, false, false, 50);
 
         dogShelter.fosterRequest(woody);
         dogShelter.fosterRequest(buzz);
+        dogShelter.fosterRequest(buster);
 
         dogShelter.fosterRequest(joey);
         dogShelter.fosterRequest(archie);
@@ -29,11 +31,12 @@ public class DogShelter {
     private void fosterRequest(Dog dog) {
         dogFosterRequest(dog)
                 .ifHappy().peek(this::payDonationFee)
-                    .then(this::checkSuitability)
-                    .peek(this::reportSuccess)
+                .then(this::checkSuitability)
                 .ifSad().then(this::appealFailedRequest)
-                    .peek(this::reportUnsuccessfulFosterAttempt)
-                .ifTechnicalFailure().peek(this::reportError);
+                .peek(this::reportUnsuccessfulFosterAttempt)
+                .ifTechnicalFailure().peek(this::reportError)
+                .ifHappy()
+                .peek(this::reportSuccess);
 
     }
 
@@ -51,6 +54,8 @@ public class DogShelter {
     private HappyPath<DogFosterSuccess, DogFosterRejection> checkSuitability(DogFosterRequest dogFosterRequest) {
         if (dogFosterRequest.dog instanceof Westie) {
             return sadPath(new DogFosterRejection(dogFosterRequest.dog, "Currently all Westie's are too young for adoption."));
+        } else if (dogFosterRequest.dog instanceof Patterdale && dogFosterRequest.dog.trainingRequired()) {
+            return sadPath(new DogFosterRejection(dogFosterRequest.dog, "All Patterdale's must be trained before adoption."));
         }
 
         return happyPath(new DogFosterSuccess(dogFosterRequest.dog));
