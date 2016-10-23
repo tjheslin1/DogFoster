@@ -29,7 +29,7 @@ public class DogShelter {
     private void fosterRequest(Dog dog) {
         dogFosterRequest(dog)
                 .ifHappy().peek(this::payDonationFee)
-                    .then(this::updateMicrochip)
+                    .then(this::checkSuitability)
                     .peek(this::reportSuccess)
                 .ifSad().then(this::appealFailedRequest)
                     .peek(this::reportUnsuccessfulFosterAttempt)
@@ -48,7 +48,7 @@ public class DogShelter {
         }
     }
 
-    private HappyPath<DogFosterSuccess, DogFosterRejection> updateMicrochip(DogFosterRequest dogFosterRequest) {
+    private HappyPath<DogFosterSuccess, DogFosterRejection> checkSuitability(DogFosterRequest dogFosterRequest) {
         if (dogFosterRequest.dog instanceof Westie) {
             return sadPath(new DogFosterRejection(dogFosterRequest.dog, "Currently all Westie's are too young for adoption."));
         }
