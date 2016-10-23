@@ -9,4 +9,9 @@ public class AppealFailed extends ValueType {
         this.appealFailureReason = appealFailureReason;
         this.fosterRejection = fosterRejection;
     }
+
+    @Override
+    public String toString() {
+        return appealFailureReason + fosterRejection;
+    }
 }

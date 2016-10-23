@@ -9,27 +9,10 @@ import static java.lang.String.format;
 
 public class DogShelter {
 
-    private static final DogShelter dogShelter = new DogShelter();
     public static final int MINIMUM_DONATION = 75;
 
-    public static void main(String[] args) {
-        Dog woody = new Patterdale("Woody", 5, false, 2, 80);
-        Dog buzz = new Patterdale("Buzz", 8, false, 3, 90);
-        Dog buster = new Patterdale("Buster", 8, true, 3, 110);
-
-        Dog joey = new Westie("Joey", 2, false, true, 75);
-        Dog archie = new Westie("Archie", 4, false, false, 50);
-
-        dogShelter.fosterRequest(woody);
-        dogShelter.fosterRequest(buzz);
-        dogShelter.fosterRequest(buster);
-
-        dogShelter.fosterRequest(joey);
-        dogShelter.fosterRequest(archie);
-    }
-
-    private void fosterRequest(Dog dog) {
-        dogFosterRequest(dog)
+    public HappyPath<DogFosterSuccess, AppealFailed> fosterRequest(Dog dog) {
+        return dogFosterRequest(dog)
                 .ifHappy().peek(this::payDonationFee)
                 .then(this::checkSuitability)
                 .ifSad().then(this::appealFailedRequest)
@@ -72,7 +55,7 @@ public class DogShelter {
 
     private HappyPath<DogFosterSuccess, AppealFailed> appealFailedRequest(DogFosterRejection dogFosterRejection) {
         if (dogFosterRejection.reason.contains("too young")) {
-            return sadPath(new AppealFailed("blah", dogFosterRejection));
+            return sadPath(new AppealFailed("Appeal failed. ", dogFosterRejection));
         }
 
         return happyPath(new DogFosterSuccess(dogFosterRejection.dog));
