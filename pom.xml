@@ -28,7 +28,7 @@
         <dependency>
             <groupId>io.github.theangrydev</groupId>
             <artifactId>business-flows</artifactId>
-            <version>8.1.1</version>
+            <version>8.3.0</version>
         </dependency>
 
         <dependency>
