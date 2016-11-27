@@ -1,5 +1,6 @@
 package io.github.tjheslin1;
 
+import io.github.theangrydev.businessflows.BusinessFlow;
 import io.github.theangrydev.businessflows.HappyPath;
 import io.github.tjheslin1.domain.*;
 
@@ -11,7 +12,7 @@ public class DogShelter {
 
     public static final int MINIMUM_DONATION = 75;
 
-    public HappyPath<DogFosterSuccess, AppealFailed> fosterRequest(Dog dog) {
+    public BusinessFlow<DogFosterSuccess, AppealFailed> fosterRequest(Dog dog) {
         return dogFosterRequest(dog)
                 .ifHappy().peek(this::payDonationFee)
                 .then(this::checkSuitability)

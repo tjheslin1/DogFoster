@@ -28,7 +28,7 @@
         <dependency>
             <groupId>io.github.theangrydev</groupId>
             <artifactId>business-flows</artifactId>
-            <version>9.0.0</version>
+            <version>10.1.0</version>
         </dependency>
 
         <dependency>
@@ -41,6 +41,7 @@
             <artifactId>assertj-core</artifactId>
             <version>3.4.1</version>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

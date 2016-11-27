@@ -29,7 +29,7 @@ public class DogShelterTest implements WithAssertions {
     }
 
     @Test
-    public void westiesWhichAreTooYoundResultInTechnicalFailure() throws Exception {
+    public void donationTooLowResultInATechnicalFailure() throws Exception {
         Exception actual = null;
         try {
             actual = dogShelter.fosterRequest(archie).ifTechnicalFailure().get();
@@ -42,7 +42,8 @@ public class DogShelterTest implements WithAssertions {
     }
 
     @Test
-    public void asdasd() throws Exception {
-        assertThat(dogShelter.fosterRequest(joey).ifSad().get().toString()).isEqualTo("Appeal failed. Unable to foster 'Joey' due to 'Currently all Westie's are too young for adoption.'");
+    public void westiesWhichAreTooYoungResultInTechnicalFailure() throws Exception {
+        assertThat(dogShelter.fosterRequest(joey).ifSad().get().toString())
+                .isEqualTo("Appeal failed. Unable to foster 'Joey' due to 'Currently all Westie's are too young for adoption.'");
     }
 }
